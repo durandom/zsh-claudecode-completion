@@ -2,6 +2,23 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.1] - 2026-01-08
+
+### Added
+- Added `--help` flag completion for `mcp get` command
+- Added `--help` flag completion for `mcp list` command
+- Added `--help` flag completion for `mcp reset-project-choices` command
+- Added `--help` flag completion for `plugin marketplace list` command
+- Added `--help` flag completion for `setup-token`, `doctor`, and `update` commands
+
+### Changed
+- Updated completion script to match Claude CLI v2.1.1
+- Alphabetically sorted commands and flags for better organization
+- Improved argument completion for `mcp get` - now uses `_arguments` instead of `_message`
+- Improved argument completion for `mcp list` - now uses `_arguments` instead of `_message`
+- Improved argument completion for `mcp reset-project-choices` - now uses `_arguments` instead of `_message`
+- Improved argument completion for `setup-token`, `doctor`, and `update` - now uses `_arguments` instead of `_message`
+
 ## [2.0.76] - 2026-01-06
 
 No changes to completions. CLI structure remains the same as the previous version.
