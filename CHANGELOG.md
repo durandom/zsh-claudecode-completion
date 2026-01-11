@@ -2,6 +2,11 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.4] - 2026-01-11
+
+### Changed
+- Updated description for `--disable-slash-commands` flag: Changed from "Disable all slash commands" to "Disable all skills"
+
 ## [2.1.1] - 2026-01-08
 
 ### Added
