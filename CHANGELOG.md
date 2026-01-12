@@ -2,6 +2,21 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.5] - 2026-01-12
+
+### Changed
+- Updated `mcp add` command: Added "(default: local)" to scope flag description for clarity
+- Updated `mcp add` command: Added "(defaults to stdio if not specified)" to transport flag description
+- Updated `mcp remove` command: Enhanced scope flag description to clarify "(if not specified, removes from whichever scope it exists in)"
+- Updated `mcp add-json` command: Added "(default: local)" to scope flag description
+- Updated `mcp add-from-claude-desktop` command: Added "(default: local)" to scope flag description
+- Updated `plugin install` command: Added "(default: user)" to scope flag description
+- Updated `plugin uninstall` command: Added "(default: user)" to scope flag description
+- Updated `plugin enable` command: Added "(default: user)" to scope flag description
+- Updated `plugin disable` command: Added "(default: user)" to scope flag description
+- Updated `plugin update` command: Added "(default: user)" to scope flag description
+- Updated `plugin marketplace update` command: Made name parameter optional (now `::name:` instead of `:name:`) to support updating all marketplaces
+
 ## [2.1.4] - 2026-01-11
 
 ### Changed

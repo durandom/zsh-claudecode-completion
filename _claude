@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.4
+# Auto-generated for Claude v2.1.5
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -68,8 +68,8 @@ case $words[2] in
           ;;
         add)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Configuration scope]:scope:(local user project)' \
-            '(-t --transport)'{-t,--transport}'[Transport type]:transport:(stdio sse http)' \
+            '(-s --scope)'{-s,--scope}'[Configuration scope (default: local)]:scope:(local user project)' \
+            '(-t --transport)'{-t,--transport}'[Transport type (defaults to stdio if not specified)]:transport:(stdio sse http)' \
             '*'{-e,--env}'[Set environment variables]:env:' \
             '*'{-H,--header}'[Set WebSocket headers]:header:' \
             '(-h --help)'{-h,--help}'[Display help]' \
@@ -79,20 +79,20 @@ case $words[2] in
           ;;
         remove)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Configuration scope]:scope:(local user project)' \
+            '(-s --scope)'{-s,--scope}'[Configuration scope (if not specified, removes from whichever scope it exists in)]:scope:(local user project)' \
             '(-h --help)'{-h,--help}'[Display help]' \
             ':name:'
           ;;
         add-json)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Configuration scope]:scope:(local user project)' \
+            '(-s --scope)'{-s,--scope}'[Configuration scope (default: local)]:scope:(local user project)' \
             '(-h --help)'{-h,--help}'[Display help]' \
             ':name:' \
             ':json:'
           ;;
         add-from-claude-desktop)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Configuration scope]:scope:(local user project)' \
+            '(-s --scope)'{-s,--scope}'[Configuration scope (default: local)]:scope:(local user project)' \
             '(-h --help)'{-h,--help}'[Display help]'
           ;;
         get)
@@ -139,7 +139,7 @@ case $words[2] in
               update)
                 _arguments \
                   '(-h --help)'{-h,--help}'[Display help]' \
-                  ':name:'
+                  '::name:'
                 ;;
               list)
                 _arguments \
@@ -153,31 +153,31 @@ case $words[2] in
           ;;
         install|i)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Installation scope]:scope:(user project local)' \
+            '(-s --scope)'{-s,--scope}'[Installation scope (default: user)]:scope:(user project local)' \
             '(-h --help)'{-h,--help}'[Display help]' \
             ':plugin:'
           ;;
         uninstall|remove)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Uninstall from scope]:scope:(user project local)' \
+            '(-s --scope)'{-s,--scope}'[Uninstall from scope (default: user)]:scope:(user project local)' \
             '(-h --help)'{-h,--help}'[Display help]' \
             ':plugin:'
           ;;
         enable)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Installation scope]:scope:(user project local)' \
+            '(-s --scope)'{-s,--scope}'[Installation scope (default: user)]:scope:(user project local)' \
             '(-h --help)'{-h,--help}'[Display help]' \
             ':plugin:'
           ;;
         disable)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Installation scope]:scope:(user project local)' \
+            '(-s --scope)'{-s,--scope}'[Installation scope (default: user)]:scope:(user project local)' \
             '(-h --help)'{-h,--help}'[Display help]' \
             ':plugin:'
           ;;
         update)
           _arguments \
-            '(-s --scope)'{-s,--scope}'[Installation scope]:scope:(user project local managed)' \
+            '(-s --scope)'{-s,--scope}'[Installation scope (default: user)]:scope:(user project local managed)' \
             '(-h --help)'{-h,--help}'[Display help]' \
             ':plugin:'
           ;;
