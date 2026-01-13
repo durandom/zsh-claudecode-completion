@@ -2,6 +2,11 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.6] - 2026-01-13
+
+### Changed
+- Updated `--add-dir` flag to be repeatable (now accepts multiple directories)
+
 ## [2.1.5] - 2026-01-12
 
 ### Changed
