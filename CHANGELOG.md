@@ -2,6 +2,51 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.7] - 2026-01-14
+
+### Changed
+- Updated all flag descriptions to provide more detailed information and context
+- Updated `--agent` flag description: Now clarifies it "Overrides the agent setting"
+- Updated `--allow-dangerously-skip-permissions` flag description: Added "without it being enabled by default" and recommendation note
+- Updated `--allowedTools` and `--allowed-tools` flags: Added usage examples (e.g. "Bash(git:*) Edit")
+- Updated `--betas` flag description: Added "(API key users only)" clarification
+- Updated `--continue` flag description: Now specifies "in the current directory"
+- Updated `--dangerously-skip-permissions` flag description: Added recommendation note for sandboxes
+- Updated `--debug` flag description: Added detailed examples of category filtering (e.g., "api,hooks" or "!statsig,!file")
+- Updated `--disallowedTools` and `--disallowed-tools` flags: Added usage examples (e.g. "Bash(git:*) Edit")
+- Updated `--fallback-model` flag description: Added "when default model is overloaded (only works with --print)"
+- Updated `--fork-session` flag description: Added "(use with --resume or --continue)" clarification
+- Updated `--ide` flag description: Added "if exactly one valid IDE is available" condition
+- Updated `--include-partial-messages` flag description: Added "(only works with --print and --output-format=stream-json)"
+- Updated `--input-format` flag description: Added format details and constraints
+- Updated `--max-budget-usd` flag description: Added "(only works with --print)" clarification
+- Updated `--mcp-config` flag description: Added "(space-separated)" clarification
+- Updated `--mcp-debug` flag description: Improved deprecation notice with migration guidance
+- Updated `--model` flag description: Added more detailed explanation about aliases and full names
+- Updated `--no-session-persistence` flag description: Added detailed explanation of behavior
+- Updated `--output-format` flag description: Added detailed format descriptions
+- Updated `--plugin-dir` flag description: Added "(repeatable)" clarification
+- Updated `--print` flag description: Added important security note about workspace trust dialog
+- Updated `--replay-user-messages` flag description: Added detailed constraints
+- Updated `--resume` flag description: Added "or open interactive picker with optional search term"
+- Updated `--session-id` flag description: Added "(must be a valid UUID)" requirement
+- Updated `--setting-sources` flag description: Added explicit source options
+- Updated `--settings` flag description: Added "to load additional settings from" clarification
+- Updated `--strict-mcp-config` flag description: Added "ignoring all other MCP configurations"
+- Updated `--tools` flag description: Added detailed usage instructions and examples
+- Updated `mcp add` command flags: Improved descriptions with examples for `-e` and `-H` flags
+- Updated `mcp add` command: Enhanced scope description format "(local, user, or project)"
+- Updated `mcp add` command: Enhanced transport description with explicit types
+- Updated `mcp remove` command: Enhanced scope description with clarification
+- Updated `mcp add-json` command: Enhanced scope description format
+- Updated `mcp add-from-claude-desktop` command: Enhanced scope description format
+- Updated `plugin install` command: Enhanced scope description format with colon separator
+- Updated `plugin uninstall` command: Enhanced scope description format with colon separator
+- Updated `plugin enable` command: Enhanced scope description format
+- Updated `plugin disable` command: Enhanced scope description format
+- Updated `plugin update` command: Enhanced scope description format with comma separator
+- Reordered flags in multiple commands to improve consistency (help flag first in many cases)
+
 ## [2.1.6] - 2026-01-13
 
 ### Changed
