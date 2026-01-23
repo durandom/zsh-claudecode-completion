@@ -2,6 +2,20 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.17] - 2026-01-23
+
+### Changed
+- Updated `install` command description: Added detailed usage information - "Use [target] to specify version (stable, latest, or specific version)"
+- Updated `plugin install` and `plugin i` command descriptions: Added "(use plugin@marketplace for specific marketplace)" clarification
+- Updated `plugin update` command description: Added "(restart required to apply)" notice
+- Updated `plugin marketplace update` command description: Added "updates all if no name specified" clarification
+- Updated `--file` flag description: Added example usage - "(e.g., --file file_abc:doc.txt file_def:img.png)"
+- Updated `--json-schema` flag description: Added example schema - `{"type":"object","properties":{"name":{"type":"string"}},"required":["name"]}`
+- Updated `--mcp-debug` flag description: Improved deprecation notice format - "[DEPRECATED. Use --debug instead]"
+- Updated `--model` flag description: Added examples for aliases and full names - "(e.g. sonnet or opus)" and "(e.g. claude-sonnet-4-5-20250929)"
+- Updated `--tools` flag description: Added example tool names - "(e.g. \"Bash,Edit,Read\")"
+- Updated `mcp add` command `-H/--header` flag description: Added example with multiple headers - "(e.g. -H \"X-Api-Key: abc123\" -H \"X-Custom: value\")"
+
 ## [2.1.14] - 2026-01-21
 
 No changes to completions. CLI structure remains the same as v2.1.12.
