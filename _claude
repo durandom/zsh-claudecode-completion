@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.14
+# Auto-generated for Claude v2.1.17
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -10,7 +10,7 @@ typeset -A opt_args
 local -a commands
 commands=(
   'doctor:Check the health of your Claude Code auto-updater'
-  'install:Install Claude Code native build'
+  'install:Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)'
   'mcp:Configure and manage MCP servers'
   'plugin:Manage Claude Code plugins'
   'setup-token:Set up a long-lived authentication token (requires Claude subscription)'
@@ -35,13 +35,13 @@ plugin_commands=(
   'disable:Disable an enabled plugin'
   'enable:Enable a disabled plugin'
   'help:Display help for command'
-  'install:Install a plugin from available marketplaces'
-  'i:Install a plugin from available marketplaces'
+  'install:Install a plugin from available marketplaces (use plugin@marketplace for specific marketplace)'
+  'i:Install a plugin from available marketplaces (use plugin@marketplace for specific marketplace)'
   'list:List installed plugins'
   'marketplace:Manage Claude Code marketplaces'
   'uninstall:Uninstall an installed plugin'
   'remove:Uninstall an installed plugin'
-  'update:Update a plugin to the latest version'
+  'update:Update a plugin to the latest version (restart required to apply)'
   'validate:Validate a plugin or marketplace manifest'
 )
 
@@ -52,7 +52,7 @@ marketplace_commands=(
   'list:List all configured marketplaces'
   'remove:Remove a configured marketplace'
   'rm:Remove a configured marketplace'
-  'update:Update marketplace(s) from their source'
+  'update:Update marketplace(s) from their source - updates all if no name specified'
 )
 
 case $words[2] in
@@ -70,7 +70,7 @@ case $words[2] in
         add)
           _arguments \
             '(-e --env)*'{-e,--env}'[Set environment variables (e.g. -e KEY=value)]:env:' \
-            '(-H --header)*'{-H,--header}'[Set WebSocket headers (e.g. -H "X-Api-Key: abc123")]:header:' \
+            '(-H --header)*'{-H,--header}'[Set WebSocket headers (e.g. -H "X-Api-Key: abc123" -H "X-Custom: value")]:header:' \
             '(-h --help)'{-h,--help}'[Display help]' \
             '(-s --scope)'{-s,--scope}'[Configuration scope (local, user, or project) (default: local)]:scope:(local user project)' \
             '(-t --transport)'{-t,--transport}'[Transport type (stdio, sse, http). Defaults to stdio if not specified]:transport:(stdio sse http)' \
@@ -228,17 +228,17 @@ _arguments -s \
   '*--disallowedTools[Comma or space-separated list of tool names to deny (e.g. "Bash(git:*) Edit")]:tools:' \
   '*--disallowed-tools[Comma or space-separated list of tool names to deny (e.g. "Bash(git:*) Edit")]:tools:' \
   '--fallback-model[Enable automatic fallback to specified model when default model is overloaded (only works with --print)]:model:' \
-  '*--file[File resources to download at startup. Format: file_id:relative_path]:file:' \
+  '*--file[File resources to download at startup. Format: file_id:relative_path (e.g., --file file_abc:doc.txt file_def:img.png)]:file:' \
   '--fork-session[When resuming, create a new session ID instead of reusing the original (use with --resume or --continue)]' \
   '(-h --help)'{-h,--help}'[Display help for command]' \
   '--ide[Automatically connect to IDE on startup if exactly one valid IDE is available]' \
   '--include-partial-messages[Include partial message chunks as they arrive (only works with --print and --output-format=stream-json)]' \
   '--input-format[Input format (only works with --print): "text" (default), or "stream-json" (realtime streaming input)]:format:(text stream-json)' \
-  '--json-schema[JSON Schema for structured output validation]:schema:' \
+  '--json-schema[JSON Schema for structured output validation. Example: {"type":"object","properties":{"name":{"type":"string"}},"required":["name"]}]:schema:' \
   '--max-budget-usd[Maximum dollar amount to spend on API calls (only works with --print)]:amount:' \
   '*--mcp-config[Load MCP servers from JSON files or strings (space-separated)]:config:_files' \
-  '--mcp-debug[DEPRECATED. Use --debug instead - Enable MCP debug mode (shows MCP server errors)]' \
-  '--model[Model for the current session. Provide an alias for the latest model or a models full name]:model:' \
+  '--mcp-debug[[DEPRECATED. Use --debug instead] Enable MCP debug mode (shows MCP server errors)]' \
+  '--model[Model for the current session. Provide an alias for the latest model (e.g. sonnet or opus) or a models full name (e.g. claude-sonnet-4-5-20250929)]:model:' \
   '--no-chrome[Disable Claude in Chrome integration]' \
   '--no-session-persistence[Disable session persistence - sessions will not be saved to disk and cannot be resumed (only works with --print)]' \
   '--output-format[Output format (only works with --print): "text" (default), "json" (single result), or "stream-json" (realtime streaming)]:format:(text json stream-json)' \
@@ -252,7 +252,7 @@ _arguments -s \
   '--settings[Path to a settings JSON file or a JSON string to load additional settings from]:file:_files' \
   '--strict-mcp-config[Only use MCP servers from --mcp-config, ignoring all other MCP configurations]' \
   '--system-prompt[System prompt to use for the session]:prompt:' \
-  '*--tools[Specify the list of available tools from the built-in set. Use "" to disable all tools, "default" to use all tools, or specify tool names]:tools:' \
+  '*--tools[Specify the list of available tools from the built-in set. Use "" to disable all tools, "default" to use all tools, or specify tool names (e.g. "Bash,Edit,Read")]:tools:' \
   '--verbose[Override verbose mode setting from config]' \
   '(-v --version)'{-v,--version}'[Output the version number]' \
   '1:command:(doctor install mcp plugin setup-token update)' \
