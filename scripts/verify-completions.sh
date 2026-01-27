@@ -63,19 +63,37 @@ ZSHRC
 
 # Run expect to test completion
 OUTPUT_FILE="$TMPDIR/output.txt"
+ZSHRC_FILE="$TMPDIR/.zshrc"
 
 # Temporarily disable exit on error for expect
 set +e
 expect << EXPECT_SCRIPT > "$OUTPUT_FILE" 2>&1
-set timeout 5
-set env(ZDOTDIR) "$TMPDIR"
+set timeout 10
 set env(HOME) "$TMPDIR"
 
-spawn zsh -i
+# Use zsh -f to skip ALL rc files (avoids system compinit prompts on Ubuntu)
+# Then manually source our test configuration
+spawn zsh -f
 
+# Wait for basic prompt
+expect {
+    -re {%|>|\$} {}
+    timeout { puts "TIMEOUT: waiting for initial prompt"; exit 1 }
+    eof { puts "EOF: zsh exited unexpectedly"; exit 1 }
+}
+
+# Source our test configuration
+send "source $ZSHRC_FILE\r"
+
+# Wait for our custom prompt
 expect {
     "TEST>" {}
-    timeout { puts "TIMEOUT: waiting for prompt"; exit 1 }
+    -re "insecure directories" {
+        # Handle compinit security prompt if it appears
+        send "y\r"
+        exp_continue
+    }
+    timeout { puts "TIMEOUT: waiting for TEST> prompt"; exit 1 }
     eof { puts "EOF: zsh exited unexpectedly"; exit 1 }
 }
 
