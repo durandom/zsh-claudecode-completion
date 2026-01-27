@@ -17,16 +17,60 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y expect zsh
+
       - name: Install Claude CLI
         run: curl -fsSL https://claude.ai/install.sh | bash
 
       - name: Add Claude to PATH
         run: echo "$HOME/.claude/bin" >> $GITHUB_PATH
 
-      - name: Run update-completions and create PR
+      - name: Run update-completions
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          claude -p "Follow the instructions in .claude/commands/update-completions.md to update the zsh completions. Do NOT create a PR - only update the files locally. Skip the --create-pr step." \
+            --dangerously-skip-permissions
+
+      - name: Verify completion script
+        run: ./scripts/verify-completions.sh
+
+      - name: Create PR if changes exist
+        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          claude -p "Follow the instructions in .claude/commands/update-completions.md to update the zsh completions. Pass the --create-pr flag to create a pull request with a detailed description of the changes." \
-            --dangerously-skip-permissions
+          # Check if there are any changes
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          # Get the new Claude version
+          NEW_VERSION=$(cat claude-version 2>/dev/null || echo "unknown")
+          BRANCH_NAME="auto-update/claude-completions-${NEW_VERSION}-$(git rev-parse --short HEAD)"
+
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Create branch and commit
+          git checkout -b "$BRANCH_NAME"
+          git add -A
+          git commit -m "Update completions for Claude v${NEW_VERSION}"
+
+          # Push and create PR
+          git push -u origin "$BRANCH_NAME"
+          gh pr create \
+            --title "Update completions for Claude v${NEW_VERSION}" \
+            --body "$(cat <<'EOF'
+          ## Summary
+          - Auto-generated update for Claude CLI completions
+          - Updated to match Claude CLI v${NEW_VERSION}
+          - Verification passed: completion script loads without errors
+
+          ## Test plan
+          - [ ] Review the changes to `_claude`
+          - [ ] Test completions locally with `source zsh-claudecode-completion.plugin.zsh && compinit`
+          EOF
+          )"
