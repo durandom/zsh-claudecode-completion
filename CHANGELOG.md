@@ -2,6 +2,11 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.20] - 2026-01-27
+
+### Added
+- New `--debug-file` flag: Write debug logs to a specific file path (implicitly enables debug mode)
+
 ## [2.1.19] - 2026-01-24
 
 ### Changed
