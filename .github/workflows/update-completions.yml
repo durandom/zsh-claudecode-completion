@@ -39,6 +39,7 @@ jobs:
       - name: Create PR if changes exist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: |
           # Check if there are any changes
           if git diff --quiet && git diff --cached --quiet; then
@@ -46,7 +47,7 @@ jobs:
             exit 0
           fi
 
-          # Get the new Claude version
+          # Get the new Claude version for branch naming
           NEW_VERSION=$(cat claude-version 2>/dev/null || echo "unknown")
           BRANCH_NAME="auto-update/claude-completions-${NEW_VERSION}-$(git rev-parse --short HEAD)"
 
@@ -54,23 +55,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Create branch and commit
+          # Create branch
           git checkout -b "$BRANCH_NAME"
-          git add -A
-          git commit -m "Update completions for Claude v${NEW_VERSION}"
 
-          # Push and create PR
-          git push -u origin "$BRANCH_NAME"
-          gh pr create \
-            --title "Update completions for Claude v${NEW_VERSION}" \
-            --body "$(cat <<'EOF'
-          ## Summary
-          - Auto-generated update for Claude CLI completions
-          - Updated to match Claude CLI v${NEW_VERSION}
-          - Verification passed: completion script loads without errors
-
-          ## Test plan
-          - [ ] Review the changes to `_claude`
-          - [ ] Test completions locally with `source zsh-claudecode-completion.plugin.zsh && compinit`
-          EOF
-          )"
+          # Use Claude to commit and create PR with intelligent summary
+          claude -p "Review the current git changes (use git diff and git status), then commit all changes and create a PR. The branch is already created. Use a commit message that accurately describes what changed in the completion script. For the PR, write a clear summary explaining what new commands, flags, or completions were added/changed/removed based on the actual diff." \
+            --dangerously-skip-permissions --allowedTools "Bash(git:*),Bash(gh:*)"
