@@ -11,10 +11,12 @@ local _cache_dir="${ZSH_CACHE_DIR:-$HOME/.cache/zsh}/completions"
 # Create cache directory if it doesn't exist
 [[ -d "$_cache_dir" ]] || mkdir -p "$_cache_dir"
 
-# Copy completion script to cache directory
+# Copy completion script to cache directory (only if source is newer)
 # This avoids fpath duplication issues when plugin dir is symlinked
 if [[ -f "$_plugin_dir/_claude" ]]; then
-  cp "$_plugin_dir/_claude" "$_cache_dir/_claude"
+  if [[ ! -f "$_cache_dir/_claude" || "$_plugin_dir/_claude" -nt "$_cache_dir/_claude" ]]; then
+    cp "$_plugin_dir/_claude" "$_cache_dir/_claude"
+  fi
 fi
 
 # Ensure cache directory is in fpath (Oh My Zsh usually adds this, but just in case)
