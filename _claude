@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.25
+# Auto-generated for Claude v2.1.27
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -173,9 +173,10 @@ case $words[2] in
           ;;
         disable)
           _arguments \
+            '(-a --all)'{-a,--all}'[Disable all enabled plugins]' \
             '(-h --help)'{-h,--help}'[Display help]' \
             '(-s --scope)'{-s,--scope}'[Installation scope: user, project, local (default: user)]:scope:(user project local)' \
-            ':plugin:'
+            '::plugin:'
           ;;
         update)
           _arguments \
@@ -231,6 +232,7 @@ _arguments -s \
   '--fallback-model[Enable automatic fallback to specified model when default model is overloaded (only works with --print)]:model:' \
   '*--file[File resources to download at startup. Format: file_id:relative_path (e.g., --file file_abc:doc.txt file_def:img.png)]:file:' \
   '--fork-session[When resuming, create a new session ID instead of reusing the original (use with --resume or --continue)]' \
+  '--from-pr[Resume a session linked to a PR by PR number/URL, or open interactive picker with optional search term]:value:' \
   '(-h --help)'{-h,--help}'[Display help for command]' \
   '--ide[Automatically connect to IDE on startup if exactly one valid IDE is available]' \
   '--include-partial-messages[Include partial message chunks as they arrive (only works with --print and --output-format=stream-json)]' \
@@ -239,7 +241,7 @@ _arguments -s \
   '--max-budget-usd[Maximum dollar amount to spend on API calls (only works with --print)]:amount:' \
   '*--mcp-config[Load MCP servers from JSON files or strings (space-separated)]:config:_files' \
   '--mcp-debug[[DEPRECATED. Use --debug instead\] Enable MCP debug mode (shows MCP server errors)]' \
-  '--model[Model for the current session. Provide an alias for the latest model (e.g. sonnet or opus) or a models full name (e.g. claude-sonnet-4-5-20250929)]:model:' \
+  '--model[Model for the current session. Provide an alias for the latest model (e.g. '\''sonnet'\'' or '\''opus'\'') or a model'\''s full name (e.g. '\''claude-sonnet-4-5-20250929'\'')]:model:' \
   '--no-chrome[Disable Claude in Chrome integration]' \
   '--no-session-persistence[Disable session persistence - sessions will not be saved to disk and cannot be resumed (only works with --print)]' \
   '--output-format[Output format (only works with --print): "text" (default), "json" (single result), or "stream-json" (realtime streaming)]:format:(text json stream-json)' \

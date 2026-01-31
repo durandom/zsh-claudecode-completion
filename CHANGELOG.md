@@ -2,6 +2,15 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.27] - 2026-01-31
+
+### Added
+- New `--from-pr` flag: Resume a session linked to a PR by PR number/URL, or open interactive picker with optional search term
+- Added `--all` flag to `plugin disable` command: Disable all enabled plugins
+
+### Changed
+- Updated `plugin disable` command: Made plugin parameter optional to support disabling all plugins with `--all` flag
+
 ## [2.1.25] - 2026-01-30
 
 No changes to completions. CLI structure remains the same as v2.1.22.
