@@ -2,6 +2,16 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.31] - 2026-02-04
+
+### Added
+- New `--callback-port` flag for `mcp add` command: Fixed port for OAuth callback (for servers requiring pre-registered redirect URIs)
+- New `--client-id` flag for `mcp add` command: OAuth client ID for HTTP/SSE servers
+- New `--client-secret` flag for `mcp add` command: Prompt for OAuth client secret (or set MCP_CLIENT_SECRET env var)
+
+### Changed
+- Updated `--debug` flag description: Changed example from "!statsig,!file" to "!1p,!file" in category filtering examples
+
 ## [2.1.29] - 2026-02-01
 
 No changes to completions. CLI structure remains the same as v2.1.27.
