@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.34
+# Auto-generated for Claude v2.1.37
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -89,6 +89,7 @@ case $words[2] in
           ;;
         add-json)
           _arguments \
+            '--client-secret[Prompt for OAuth client secret (or set MCP_CLIENT_SECRET env var)]' \
             '(-h --help)'{-h,--help}'[Display help]' \
             '(-s --scope)'{-s,--scope}'[Configuration scope (local, user, or project) (default: local)]:scope:(local user project)' \
             ':name:' \
