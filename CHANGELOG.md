@@ -2,6 +2,11 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.37] - 2026-02-09
+
+### Added
+- New `--client-secret` flag for `mcp add-json` command: Prompt for OAuth client secret (or set MCP_CLIENT_SECRET env var)
+
 ## [2.1.34] - 2026-02-06
 
 No changes to completions. CLI structure remains the same as v2.1.31.
