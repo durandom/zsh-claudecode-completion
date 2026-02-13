@@ -2,19 +2,28 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.39
+# Auto-generated for Claude v2.1.41
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
 
 local -a commands
 commands=(
+  'auth:Manage authentication'
   'doctor:Check the health of your Claude Code auto-updater'
   'install:Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)'
   'mcp:Configure and manage MCP servers'
   'plugin:Manage Claude Code plugins'
   'setup-token:Set up a long-lived authentication token (requires Claude subscription)'
   'update:Check for updates and install if available'
+)
+
+local -a auth_commands
+auth_commands=(
+  'help:Display help for command'
+  'login:Sign in to your Anthropic account'
+  'logout:Log out from your Anthropic account'
+  'status:Show authentication status'
 )
 
 local -a mcp_commands
@@ -56,6 +65,34 @@ marketplace_commands=(
 )
 
 case $words[2] in
+  auth)
+    if (( CURRENT == 3 )); then
+      _describe 'auth command' auth_commands
+    else
+      case $words[3] in
+        login)
+          _arguments \
+            '--email[Pre-populate email address on the login page]:email:' \
+            '(-h --help)'{-h,--help}'[Display help]' \
+            '--sso[Force SSO login flow]'
+          ;;
+        logout)
+          _arguments \
+            '(-h --help)'{-h,--help}'[Display help]'
+          ;;
+        status)
+          _arguments \
+            '(-h --help)'{-h,--help}'[Display help]' \
+            '--json[Output as JSON (default)]' \
+            '--text[Output as human-readable text]'
+          ;;
+        *)
+          _message 'no more arguments'
+          ;;
+      esac
+    fi
+    return
+    ;;
   mcp)
     if (( CURRENT == 3 )); then
       _describe 'mcp command' mcp_commands
@@ -263,5 +300,5 @@ _arguments -s \
   '*--tools[Specify the list of available tools from the built-in set. Use "" to disable all tools, "default" to use all tools, or specify tool names (e.g. "Bash,Edit,Read")]:tools:' \
   '--verbose[Override verbose mode setting from config]' \
   '(-v --version)'{-v,--version}'[Output the version number]' \
-  '1:command:(doctor install mcp plugin setup-token update)' \
+  '1:command:(auth doctor install mcp plugin setup-token update)' \
   '*:prompt:'

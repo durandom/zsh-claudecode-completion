@@ -2,6 +2,18 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.41] - 2026-02-13
+
+### Added
+- New `auth` command: Manage authentication
+- New `auth login` subcommand: Sign in to your Anthropic account
+  - Added `--email` flag: Pre-populate email address on the login page
+  - Added `--sso` flag: Force SSO login flow
+- New `auth logout` subcommand: Log out from your Anthropic account
+- New `auth status` subcommand: Show authentication status
+  - Added `--json` flag: Output as JSON (default)
+  - Added `--text` flag: Output as human-readable text
+
 ## [2.1.39] - 2026-02-11
 
 ### Added
