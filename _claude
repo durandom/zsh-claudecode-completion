@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.44
+# Auto-generated for Claude v2.1.45
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -283,7 +283,7 @@ _arguments -s \
   '--max-budget-usd[Maximum dollar amount to spend on API calls (only works with --print)]:amount:' \
   '*--mcp-config[Load MCP servers from JSON files or strings (space-separated)]:config:_files' \
   '--mcp-debug[[DEPRECATED. Use --debug instead\] Enable MCP debug mode (shows MCP server errors)]' \
-  '--model[Model for the current session. Provide an alias for the latest model (e.g. '\''sonnet'\'' or '\''opus'\'') or a model'\''s full name (e.g. '\''claude-sonnet-4-5-20250929'\'')]:model:' \
+  '--model[Model for the current session. Provide an alias for the latest model (e.g. '\''sonnet'\'' or '\''opus'\'') or a model'\''s full name (e.g. '\''claude-sonnet-4-6'\'')]:model:' \
   '--no-chrome[Disable Claude in Chrome integration]' \
   '--no-session-persistence[Disable session persistence - sessions will not be saved to disk and cannot be resumed (only works with --print)]' \
   '--output-format[Output format (only works with --print): "text" (default), "json" (single result), or "stream-json" (realtime streaming)]:format:(text json stream-json)' \

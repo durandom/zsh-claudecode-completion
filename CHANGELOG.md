@@ -2,6 +2,11 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.45] - 2026-02-18
+
+### Changed
+- Updated `--model` flag example: Changed model name from `claude-sonnet-4-5-20250929` to `claude-sonnet-4-6`
+
 ## [2.1.44] - 2026-02-17
 
 No changes to completions. CLI structure remains the same as v2.1.42.
