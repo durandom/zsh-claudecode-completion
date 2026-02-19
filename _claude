@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.44
+# Auto-generated for Claude v2.1.47
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -16,6 +16,7 @@ commands=(
   'plugin:Manage Claude Code plugins'
   'setup-token:Set up a long-lived authentication token (requires Claude subscription)'
   'update:Check for updates and install if available'
+  'upgrade:Check for updates and install if available'
 )
 
 local -a auth_commands
@@ -245,7 +246,7 @@ case $words[2] in
       ':target:(stable latest)'
     return
     ;;
-  setup-token|doctor|update)
+  setup-token|doctor|update|upgrade)
     _arguments \
       '(-h --help)'{-h,--help}'[Display help]'
     return
@@ -283,11 +284,11 @@ _arguments -s \
   '--max-budget-usd[Maximum dollar amount to spend on API calls (only works with --print)]:amount:' \
   '*--mcp-config[Load MCP servers from JSON files or strings (space-separated)]:config:_files' \
   '--mcp-debug[[DEPRECATED. Use --debug instead\] Enable MCP debug mode (shows MCP server errors)]' \
-  '--model[Model for the current session. Provide an alias for the latest model (e.g. '\''sonnet'\'' or '\''opus'\'') or a model'\''s full name (e.g. '\''claude-sonnet-4-5-20250929'\'')]:model:' \
+  '--model[Model for the current session. Provide an alias for the latest model (e.g. '\''sonnet'\'' or '\''opus'\'') or a model'\''s full name (e.g. '\''claude-sonnet-4-6'\'')]:model:' \
   '--no-chrome[Disable Claude in Chrome integration]' \
   '--no-session-persistence[Disable session persistence - sessions will not be saved to disk and cannot be resumed (only works with --print)]' \
   '--output-format[Output format (only works with --print): "text" (default), "json" (single result), or "stream-json" (realtime streaming)]:format:(text json stream-json)' \
-  '--permission-mode[Permission mode to use for the session]:mode:(acceptEdits bypassPermissions default delegate dontAsk plan)' \
+  '--permission-mode[Permission mode to use for the session]:mode:(acceptEdits bypassPermissions default dontAsk plan)' \
   '*--plugin-dir[Load plugins from directories for this session only (repeatable)]:directory:_files -/' \
   '(-p --print)'{-p,--print}'[Print response and exit (useful for pipes). Note: The workspace trust dialog is skipped when Claude is run with the -p mode. Only use this flag in directories you trust]' \
   '--replay-user-messages[Re-emit user messages from stdin back on stdout for acknowledgment (only works with --input-format=stream-json and --output-format=stream-json)]' \
@@ -300,5 +301,5 @@ _arguments -s \
   '*--tools[Specify the list of available tools from the built-in set. Use "" to disable all tools, "default" to use all tools, or specify tool names (e.g. "Bash,Edit,Read")]:tools:' \
   '--verbose[Override verbose mode setting from config]' \
   '(-v --version)'{-v,--version}'[Output the version number]' \
-  '1:command:(auth doctor install mcp plugin setup-token update)' \
+  '1:command:(auth doctor install mcp plugin setup-token update upgrade)' \
   '*:prompt:'

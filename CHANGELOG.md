@@ -2,6 +2,17 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.47] - 2026-02-19
+
+### Added
+- New `upgrade` command alias for `update`: Check for updates and install if available
+
+### Changed
+- Updated `--model` flag description example from `claude-sonnet-4-5-20250929` to `claude-sonnet-4-6`
+
+### Removed
+- Removed `delegate` from `--permission-mode` option choices (valid choices: `acceptEdits`, `bypassPermissions`, `default`, `dontAsk`, `plan`)
+
 ## [2.1.44] - 2026-02-17
 
 No changes to completions. CLI structure remains the same as v2.1.42.
