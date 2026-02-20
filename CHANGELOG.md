@@ -2,6 +2,20 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.49] - 2026-02-20
+
+### Added
+- New `--tmux` flag: Create a tmux session for the worktree (requires --worktree). Uses iTerm2 native panes when available; use --tmux=classic for traditional tmux
+- New `-w/--worktree` flag: Create a new git worktree for this session (optionally specify a name)
+
+### Changed
+- Updated `--model` flag description to reference `claude-sonnet-4-6` as the current model name example
+- Updated `plugin enable` scope description: default is now `auto-detect` instead of `user`
+- Updated `plugin disable` scope description: default is now `auto-detect` instead of `user`
+
+### Removed
+- Removed `delegate` from `--permission-mode` options (no longer listed in CLI help)
+
 ## [2.1.44] - 2026-02-17
 
 No changes to completions. CLI structure remains the same as v2.1.42.
