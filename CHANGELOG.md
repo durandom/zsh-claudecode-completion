@@ -2,6 +2,12 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.50] - 2026-02-22
+
+### Added
+- New `agents` command: List configured agents (with `--setting-sources` option)
+- New `upgrade` command alias for `update`: Check for updates and install if available
+
 ## [2.1.49] - 2026-02-20
 
 ### Added
