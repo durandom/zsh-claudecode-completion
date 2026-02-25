@@ -37,6 +37,22 @@ It may have multiple sub commands. For example, `claude plugin` will have its ow
 
 You need to iterate through every subcommand to get their help output as well. For example, start with `claude --help`. You will have all the top level commands and options. For each top level command, you will need to run `claude <top-level-command> --help` to get its subcommands and options. If any of those subcommands have their own subcommands, you will need to run `claude <top-level-command> <subcommand> --help` as well, and so on, until you have captured the full hierarchy of commands and options.
 
+### Hidden Commands
+
+Some Claude CLI commands are **hidden** — they work but are not listed in `claude --help`. These must be included in completions even though they won't appear in the help output. Always gather their help output separately:
+
+| Command | Help command | Description |
+|---------|-------------|-------------|
+| `remote-control` | `claude remote-control --help` | Connect local environment to claude.ai/code |
+
+For each hidden command:
+1. Run its `--help` to get flags and description
+2. Also check the official docs at `https://code.claude.com/docs/en/<command-name>.md` for any flags not shown in `--help` (e.g., `remote-control` has `--sandbox`, `--no-sandbox`, `--verbose` documented but not in `--help`)
+3. Include the command in both the `commands` array and the `case` statement, same as visible commands
+4. Include it in the `'1:command:(...)'` list at the bottom
+
+**Maintaining this list**: When you discover new hidden commands (e.g., a command referenced in docs or changelogs but missing from `--help`), add them to this table so future updates preserve them.
+
 ## Step 3: Regenerate Completion Script
 
 Read the existing `_claude` file and regenerate it based on the help output. Preserve the zsh completion structure:

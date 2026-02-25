@@ -16,6 +16,7 @@ commands=(
   'mcp:Configure and manage MCP servers'
   'plugin:Manage Claude Code plugins'
   'setup-token:Set up a long-lived authentication token (requires Claude subscription)'
+  'remote-control:Connect your local environment to claude.ai/code'
   'update:Check for updates and install if available'
   'upgrade:Check for updates and install if available'
 )
@@ -253,6 +254,14 @@ case $words[2] in
       ':target:(stable latest)'
     return
     ;;
+  remote-control)
+    _arguments \
+      '(-h --help)'{-h,--help}'[Display help]' \
+      '--sandbox[Enable sandboxing for filesystem and network isolation]' \
+      '--no-sandbox[Disable sandboxing]' \
+      '--verbose[Show detailed connection and session logs]'
+    return
+    ;;
   setup-token|doctor|update|upgrade)
     _arguments \
       '(-h --help)'{-h,--help}'[Display help]'
@@ -310,5 +319,5 @@ _arguments -s \
   '--verbose[Override verbose mode setting from config]' \
   '(-v --version)'{-v,--version}'[Output the version number]' \
   '(-w --worktree)'{-w,--worktree}'[Create a new git worktree for this session (optionally specify a name)]::name:' \
-  '1:command:(agents auth doctor install mcp plugin setup-token update upgrade)' \
+  '1:command:(agents auth doctor install mcp plugin remote-control setup-token update upgrade)' \
   '*:prompt:'
