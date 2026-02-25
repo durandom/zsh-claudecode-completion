@@ -21,7 +21,8 @@
       "Bash(claude install --help:*)",
       "Bash(claude doctor --help:*)",
       "Bash(claude setup-token:*)",
-      "Bash(claude migrate-installer:*)"
+      "Bash(claude migrate-installer:*)",
+      "Bash(claude remote-control --help)"
     ],
     "deny": [],
     "ask": []
