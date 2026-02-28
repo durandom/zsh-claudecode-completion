@@ -2,6 +2,12 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.63] - 2026-02-28
+
+### Added
+- New `--scope` flag for `plugin marketplace add` command: Where to declare the marketplace (user, project, or local)
+- New `--sparse` flag for `plugin marketplace add` command: Limit checkout to specific directories via git sparse-checkout (for monorepos)
+
 ## [2.1.55] - 2026-02-25
 
 No changes to completions. CLI structure remains the same as v2.1.50.
