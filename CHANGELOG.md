@@ -2,6 +2,12 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.69] - 2026-03-05
+
+### Added
+- New `open` command: Connect to a Claude Code server (internal — use cc:// URLs), with `--output-format` and `-p/--print` flags
+- New `server` command: Start a Claude Code session server, with flags: `--auth-token`, `--host`, `--idle-timeout`, `--max-sessions`, `--port`, `--unix`, `--workspace`
+
 ## [2.1.68] - 2026-03-04
 
 No changes to completions. CLI structure remains the same as v2.1.63.

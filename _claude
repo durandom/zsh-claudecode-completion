@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.68
+# Auto-generated for Claude v2.1.69
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -14,7 +14,9 @@ commands=(
   'doctor:Check the health of your Claude Code auto-updater'
   'install:Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)'
   'mcp:Configure and manage MCP servers'
+  'open:Connect to a Claude Code server (internal — use cc:// URLs)'
   'plugin:Manage Claude Code plugins'
+  'server:Start a Claude Code session server'
   'setup-token:Set up a long-lived authentication token (requires Claude subscription)'
   'remote-control:Connect your local environment to claude.ai/code'
   'update:Check for updates and install if available'
@@ -256,6 +258,26 @@ case $words[2] in
       ':target:(stable latest)'
     return
     ;;
+  open)
+    _arguments \
+      '(-h --help)'{-h,--help}'[Display help for command]' \
+      '--output-format[Output format: text, json, stream-json (default: text)]:format:(text json stream-json)' \
+      '(-p --print)'{-p,--print}'[Print mode (headless)]::prompt:' \
+      ':cc-url:'
+    return
+    ;;
+  server)
+    _arguments \
+      '--auth-token[Bearer token for auth]:token:' \
+      '(-h --help)'{-h,--help}'[Display help for command]' \
+      '--host[Bind address (default: "0.0.0.0")]:string:' \
+      '--idle-timeout[Idle timeout for detached sessions in ms (0 = never expire) (default: 600000)]:ms:' \
+      '--max-sessions[Maximum concurrent sessions (0 = unlimited) (default: 32)]:n:' \
+      '--port[HTTP port (default: 0)]:number:' \
+      '--unix[Listen on a unix domain socket]:path:_files' \
+      '--workspace[Default working directory for sessions that do not specify cwd]:dir:_files -/'
+    return
+    ;;
   remote-control)
     _arguments \
       '(-h --help)'{-h,--help}'[Display help]' \
@@ -321,5 +343,5 @@ _arguments -s \
   '--verbose[Override verbose mode setting from config]' \
   '(-v --version)'{-v,--version}'[Output the version number]' \
   '(-w --worktree)'{-w,--worktree}'[Create a new git worktree for this session (optionally specify a name)]::name:' \
-  '1:command:(agents auth doctor install mcp plugin remote-control setup-token update upgrade)' \
+  '1:command:(agents auth doctor install mcp open plugin server remote-control setup-token update upgrade)' \
   '*:prompt:'
