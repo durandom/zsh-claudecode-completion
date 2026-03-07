@@ -2,6 +2,11 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.71] - 2026-03-07
+
+### Changed
+- Added `auto` as a new choice for `--permission-mode` flag
+
 ## [2.1.68] - 2026-03-04
 
 No changes to completions. CLI structure remains the same as v2.1.63.

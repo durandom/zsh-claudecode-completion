@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.68
+# Auto-generated for Claude v2.1.71
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -306,7 +306,7 @@ _arguments -s \
   '--no-chrome[Disable Claude in Chrome integration]' \
   '--no-session-persistence[Disable session persistence - sessions will not be saved to disk and cannot be resumed (only works with --print)]' \
   '--output-format[Output format (only works with --print): "text" (default), "json" (single result), or "stream-json" (realtime streaming)]:format:(text json stream-json)' \
-  '--permission-mode[Permission mode to use for the session]:mode:(acceptEdits bypassPermissions default dontAsk plan)' \
+  '--permission-mode[Permission mode to use for the session]:mode:(acceptEdits bypassPermissions default dontAsk plan auto)' \
   '*--plugin-dir[Load plugins from directories for this session only (repeatable)]:directory:_files -/' \
   '(-p --print)'{-p,--print}'[Print response and exit (useful for pipes). Note: The workspace trust dialog is skipped when Claude is run with the -p mode. Only use this flag in directories you trust]' \
   '--replay-user-messages[Re-emit user messages from stdin back on stdout for acknowledgment (only works with --input-format=stream-json and --output-format=stream-json)]' \
