@@ -2,6 +2,14 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.72] - 2026-03-10
+
+### Added
+- New `--brief` flag: Enable SendUserMessage tool for agent-to-user communication
+
+### Changed
+- Updated `--effort` flag to include `max` as a valid level option (now: low, medium, high, max)
+
 ## [2.1.71] - 2026-03-07
 
 ### Changed
