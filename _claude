@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.72
+# Auto-generated for Claude v2.1.74
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -11,6 +11,7 @@ local -a commands
 commands=(
   'agents:List configured agents'
   'auth:Manage authentication'
+  'auto-mode:Inspect auto mode classifier configuration'
   'doctor:Check the health of your Claude Code auto-updater'
   'install:Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)'
   'mcp:Configure and manage MCP servers'
@@ -19,6 +20,13 @@ commands=(
   'remote-control:Connect your local environment to claude.ai/code'
   'update:Check for updates and install if available'
   'upgrade:Check for updates and install if available'
+)
+
+local -a auto_mode_commands
+auto_mode_commands=(
+  'config:Print the effective auto mode config as JSON: your settings where set, defaults otherwise'
+  'defaults:Print the default auto mode environment, allow, and deny rules as JSON'
+  'help:Display help for command'
 )
 
 local -a auth_commands
@@ -68,6 +76,15 @@ marketplace_commands=(
 )
 
 case $words[2] in
+  auto-mode)
+    if (( CURRENT == 3 )); then
+      _describe 'auto-mode command' auto_mode_commands
+    else
+      _arguments \
+        '(-h --help)'{-h,--help}'[Display help]'
+    fi
+    return
+    ;;
   agents)
     _arguments \
       '(-h --help)'{-h,--help}'[Display help for command]' \
@@ -322,5 +339,5 @@ _arguments -s \
   '--verbose[Override verbose mode setting from config]' \
   '(-v --version)'{-v,--version}'[Output the version number]' \
   '(-w --worktree)'{-w,--worktree}'[Create a new git worktree for this session (optionally specify a name)]::name:' \
-  '1:command:(agents auth doctor install mcp plugin remote-control setup-token update upgrade)' \
+  '1:command:(agents auth auto-mode doctor install mcp plugin remote-control setup-token update upgrade)' \
   '*:prompt:'
