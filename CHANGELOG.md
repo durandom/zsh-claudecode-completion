@@ -2,10 +2,15 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
-## [2.1.74] - 2026-03-12
+## [2.1.74] - 2026-03-13
 
 ### Added
-- New `auto-mode` command with subcommands `config` and `defaults`: Inspect auto mode classifier configuration
+- New `auto-mode` command: Inspect auto mode classifier configuration
+- New `auto-mode config` subcommand: Print the effective auto mode config as JSON
+- New `auto-mode defaults` subcommand: Print the default auto mode environment, allow, and deny rules as JSON
+
+### Removed
+- Removed `remote-control` command (no longer accessible in CLI v2.1.74)
 
 ## [2.1.72] - 2026-03-10
 
