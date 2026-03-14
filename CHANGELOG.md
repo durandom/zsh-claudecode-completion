@@ -2,6 +2,11 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.76] - 2026-03-14
+
+### Added
+- New `-n, --name` flag: Set a display name for this session (shown in /resume and terminal title)
+
 ## [2.1.72] - 2026-03-10
 
 ### Added
