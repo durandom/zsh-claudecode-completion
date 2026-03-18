@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.76
+# Auto-generated for Claude v2.1.78
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -214,6 +214,7 @@ case $words[2] in
         uninstall|remove)
           _arguments \
             '(-h --help)'{-h,--help}'[Display help]' \
+            '--keep-data[Preserve the plugin'\''s persistent data directory (~/.claude/plugins/data/{id}/)]' \
             '(-s --scope)'{-s,--scope}'[Uninstall from scope: user, project, or local (default: user)]:scope:(user project local)' \
             ':plugin:'
           ;;

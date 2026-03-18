@@ -2,6 +2,11 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.78] - 2026-03-18
+
+### Added
+- New `--keep-data` flag for `plugin uninstall`: Preserve the plugin's persistent data directory (~/.claude/plugins/data/{id}/)
+
 ## [2.1.76] - 2026-03-14
 
 ### Added
