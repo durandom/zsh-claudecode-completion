@@ -2,6 +2,12 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.80] - 2026-03-20
+
+### Added
+- New `--claudeai` flag for `auth login`: Use Claude subscription (default)
+- New `--console` flag for `auth login`: Use Anthropic Console (API usage billing) instead of Claude subscription
+
 ## [2.1.76] - 2026-03-14
 
 ### Added

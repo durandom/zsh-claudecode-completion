@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.76
+# Auto-generated for Claude v2.1.80
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -81,6 +81,8 @@ case $words[2] in
       case $words[3] in
         login)
           _arguments \
+            '--claudeai[Use Claude subscription (default)]' \
+            '--console[Use Anthropic Console (API usage billing) instead of Claude subscription]' \
             '--email[Pre-populate email address on the login page]:email:' \
             '(-h --help)'{-h,--help}'[Display help]' \
             '--sso[Force SSO login flow]'
