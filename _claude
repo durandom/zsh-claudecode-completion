@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.80
+# Auto-generated for Claude v2.1.81
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -11,6 +11,7 @@ local -a commands
 commands=(
   'agents:List configured agents'
   'auth:Manage authentication'
+  'auto-mode:Inspect auto mode classifier configuration'
   'doctor:Check the health of your Claude Code auto-updater'
   'install:Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)'
   'mcp:Configure and manage MCP servers'
@@ -216,6 +217,7 @@ case $words[2] in
         uninstall|remove)
           _arguments \
             '(-h --help)'{-h,--help}'[Display help]' \
+            '--keep-data[Preserve the plugin'\''s persistent data directory (~/.claude/plugins/data/{id}/)]' \
             '(-s --scope)'{-s,--scope}'[Uninstall from scope: user, project, or local (default: user)]:scope:(user project local)' \
             ':plugin:'
           ;;
@@ -243,6 +245,34 @@ case $words[2] in
             '--available[Include available plugins from marketplaces (requires --json)]' \
             '(-h --help)'{-h,--help}'[Display help]' \
             '--json[Output as JSON]'
+          ;;
+        *)
+          _message 'no more arguments'
+          ;;
+      esac
+    fi
+    return
+    ;;
+  auto-mode)
+    if (( CURRENT == 3 )); then
+      local -a auto_mode_commands
+      auto_mode_commands=(
+        'config:Print the effective auto mode config as JSON: your settings where set, defaults otherwise'
+        'critique:Get AI feedback on your custom auto mode rules'
+        'defaults:Print the default auto mode environment, allow, and deny rules as JSON'
+        'help:Display help for command'
+      )
+      _describe 'auto-mode command' auto_mode_commands
+    else
+      case $words[3] in
+        critique)
+          _arguments \
+            '(-h --help)'{-h,--help}'[Display help]' \
+            '--model[Override which model is used]:model:'
+          ;;
+        config|defaults)
+          _arguments \
+            '(-h --help)'{-h,--help}'[Display help]'
           ;;
         *)
           _message 'no more arguments'
@@ -282,6 +312,7 @@ _arguments -s \
   '*--allowedTools[Comma or space-separated list of tool names to allow (e.g. "Bash(git:*) Edit")]:tools:' \
   '*--allowed-tools[Comma or space-separated list of tool names to allow (e.g. "Bash(git:*) Edit")]:tools:' \
   '--append-system-prompt[Append a system prompt to the default system prompt]:prompt:' \
+  '--bare[Minimal mode: skip hooks, LSP, plugin sync, attribution, auto-memory, background prefetches, keychain reads, and CLAUDE.md auto-discovery. Sets CLAUDE_CODE_SIMPLE=1]' \
   '*--betas[Beta headers to include in API requests (API key users only)]:betas:' \
   '--brief[Enable SendUserMessage tool for agent-to-user communication]' \
   '--chrome[Enable Claude in Chrome integration]' \
@@ -325,5 +356,5 @@ _arguments -s \
   '--verbose[Override verbose mode setting from config]' \
   '(-v --version)'{-v,--version}'[Output the version number]' \
   '(-w --worktree)'{-w,--worktree}'[Create a new git worktree for this session (optionally specify a name)]::name:' \
-  '1:command:(agents auth doctor install mcp plugin remote-control setup-token update upgrade)' \
+  '1:command:(agents auth auto-mode doctor install mcp plugin remote-control setup-token update upgrade)' \
   '*:prompt:'
