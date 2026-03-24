@@ -2,6 +2,13 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.81] - 2026-03-24
+
+### Added
+- New `auto-mode` command with subcommands: `config`, `critique`, `defaults`
+- New `--bare` flag: Minimal mode that skips hooks, LSP, plugin sync, and other non-essential features
+- New `--keep-data` flag for `plugin uninstall`: Preserve the plugin's persistent data directory
+
 ## [2.1.80] - 2026-03-20
 
 ### Added
