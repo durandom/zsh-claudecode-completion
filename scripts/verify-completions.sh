@@ -36,7 +36,7 @@ fi
 echo "Verifying completion script: $COMPLETION_FILE"
 
 # Test 1: Static syntax check
-echo "  [1/2] Running static syntax check..."
+echo "  [1/3] Running static syntax check..."
 SYNTAX_OUTPUT=$(zsh -n "$COMPLETION_FILE" 2>&1) || {
     echo ""
     echo "VERIFICATION FAILED"
@@ -47,7 +47,7 @@ SYNTAX_OUTPUT=$(zsh -n "$COMPLETION_FILE" 2>&1) || {
 }
 
 # Test 2: Interactive completion test using expect
-echo "  [2/2] Testing interactive completion..."
+echo "  [2/3] Testing interactive completion (global flags)..."
 
 # Create a temporary directory for our test zsh configuration
 TMPDIR=$(mktemp -d)
@@ -164,6 +164,95 @@ if ! grep -q "COMPLETION_TEST_PASSED" "$OUTPUT_FILE"; then
     echo ""
     echo "Output:"
     cat "$OUTPUT_FILE"
+    exit 1
+fi
+
+# Test 3: Subcommand completion test (catches issues with alias-expanded flags before subcommands)
+echo "  [3/3] Testing subcommand completion..."
+
+OUTPUT_FILE2="$TMPDIR/output2.txt"
+
+set +e
+expect << EXPECT_SCRIPT > "$OUTPUT_FILE2" 2>&1
+set timeout 10
+set env(HOME) "$TMPDIR"
+
+spawn zsh -f
+
+expect {
+    -re {%|>|\$} {}
+    timeout { puts "TIMEOUT: waiting for initial prompt"; exit 1 }
+    eof { puts "EOF: zsh exited unexpectedly"; exit 1 }
+}
+
+send "source $ZSHRC_FILE\r"
+
+expect {
+    "TEST>" {}
+    -re "insecure directories" {
+        send "y\r"
+        exp_continue
+    }
+    timeout { puts "TIMEOUT: waiting for TEST> prompt"; exit 1 }
+    eof { puts "EOF: zsh exited unexpectedly"; exit 1 }
+}
+
+# Test: Trigger completion for 'claude mcp ' (subcommand)
+send "claude mcp \t"
+sleep 0.5
+
+expect {
+    -re "invalid option definition" {
+        puts "ERROR: invalid option definition detected in subcommand"
+        exit 1
+    }
+    -re "_arguments:.*:.*:" {
+        puts "ERROR: _arguments error detected in subcommand"
+        exit 1
+    }
+    "TEST>" {}
+    timeout {}
+}
+
+send "exit\r"
+expect eof
+
+puts "SUBCMD_TEST_PASSED"
+exit 0
+EXPECT_SCRIPT
+
+EXPECT_EXIT2=$?
+set -e
+
+if [[ $EXPECT_EXIT2 -ne 0 ]]; then
+    echo ""
+    echo "VERIFICATION FAILED"
+    echo "==================="
+    echo "Subcommand completion test failed"
+    echo ""
+    echo "Output:"
+    cat "$OUTPUT_FILE2"
+    exit 1
+fi
+
+if grep -q "ERROR:" "$OUTPUT_FILE2"; then
+    echo ""
+    echo "VERIFICATION FAILED"
+    echo "==================="
+    echo "Subcommand completion errors detected:"
+    echo ""
+    cat "$OUTPUT_FILE2"
+    exit 1
+fi
+
+if ! grep -q "SUBCMD_TEST_PASSED" "$OUTPUT_FILE2"; then
+    echo ""
+    echo "VERIFICATION FAILED"
+    echo "==================="
+    echo "Subcommand completion test did not complete successfully"
+    echo ""
+    echo "Output:"
+    cat "$OUTPUT_FILE2"
     exit 1
 fi
 
