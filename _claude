@@ -2,7 +2,7 @@
 
 # Zsh completion script for Claude Code CLI
 # https://github.com/anthropics/claude-code
-# Auto-generated for Claude v2.1.87
+# Auto-generated for Claude v2.1.90
 
 local curcontext="$curcontext" state line
 typeset -A opt_args
@@ -354,6 +354,7 @@ _arguments -s \
   '--from-pr[Resume a session linked to a PR by PR number/URL, or open interactive picker with optional search term]:value:' \
   '(-h --help)'{-h,--help}'[Display help for command]' \
   '--ide[Automatically connect to IDE on startup if exactly one valid IDE is available]' \
+  '--include-hook-events[Include all hook lifecycle events in the output stream (only works with --output-format=stream-json)]' \
   '--include-partial-messages[Include partial message chunks as they arrive (only works with --print and --output-format=stream-json)]' \
   '--input-format[Input format (only works with --print): "text" (default), or "stream-json" (realtime streaming input)]:format:(text stream-json)' \
   '--json-schema[JSON Schema for structured output validation. Example: {"type":"object","properties":{"name":{"type":"string"}},"required":["name"\]\}]:schema:' \
