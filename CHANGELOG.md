@@ -2,6 +2,12 @@
 
 All notable changes to the zsh-claudecode-completion plugin are documented here.
 
+## [2.1.92] - 2026-04-04
+
+### Added
+- New `--include-hook-events` flag: Include all hook lifecycle events in the output stream (only works with `--output-format=stream-json`)
+- New `--remote-control-session-name-prefix` flag: Prefix for auto-generated Remote Control session names (default: hostname)
+
 ## [2.1.87] - 2026-03-29
 
 No changes to completions. CLI structure remains the same as v2.1.83.
