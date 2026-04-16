@@ -5,8 +5,29 @@
 # Auto-generated for Claude v2.1.109
 
 _claude_session_ids() {
-  local project_dir="$HOME/.claude/projects/${PWD//\//-}"
-  [[ ! -d "$project_dir" ]] && project_dir="$HOME/.claude/projects"
+  # Claude stores each project under ~/.claude/projects/ with a mangled
+  # folder name: both `/` and `.` are replaced with `-`. The prior version
+  # only handled `/`, so any hidden-directory path (e.g. `/Users/x/.fabro/y`)
+  # silently returned no completions.
+  local mangled="${PWD//\//-}"
+  mangled="${mangled//./-}"
+  local project_dir="$HOME/.claude/projects/$mangled"
+
+  # Fallback: if the mangled folder isn't found (e.g. unknown future naming
+  # scheme, or the session was created from a different canonical path such
+  # as a resolved symlink), locate the project by matching the authoritative
+  # `originalPath` recorded in each sessions-index.json.
+  if [[ ! -d "$project_dir" ]]; then
+    project_dir=""
+    local f
+    for f in "$HOME/.claude/projects"/*/sessions-index.json(N); do
+      if [[ "$(jq -r '.originalPath // ""' "$f" 2>/dev/null)" == "$PWD" ]]; then
+        project_dir="${f:h}"
+        break
+      fi
+    done
+    [[ -z "$project_dir" ]] && return 1
+  fi
 
   local index_file="$project_dir/sessions-index.json"
   local -a ids labels
