@@ -46,6 +46,17 @@ _claude_session_ids() {
   _wanted session-ids expl 'session' compadd -V sessions -d labels -a ids
 }
 
+# Offer a freshly-generated UUID for --session-id, which expects a NEW,
+# user-assigned session identifier (not an existing session to resume).
+_claude_new_session_id() {
+  (( ${+commands[uuidgen]} )) || return 1
+  local uuid
+  uuid=$(uuidgen 2>/dev/null | tr '[:upper:]' '[:lower:]')
+  [[ -z "$uuid" ]] && return 1
+  local expl
+  _wanted new-session-id expl 'new session UUID' compadd -- "$uuid"
+}
+
 local curcontext="$curcontext" state line
 typeset -A opt_args
 
@@ -415,7 +426,7 @@ _arguments -s \
   '--remote-control-session-name-prefix[Prefix for auto-generated Remote Control session names (default: hostname)]:prefix:' \
   '--replay-user-messages[Re-emit user messages from stdin back on stdout for acknowledgment (only works with --input-format=stream-json and --output-format=stream-json)]' \
   '(-r --resume)'{-r,--resume}'[Resume a conversation by session ID, or open interactive picker with optional search term]:session:_claude_session_ids' \
-  '--session-id[Use a specific session ID for the conversation (must be a valid UUID)]:session:_claude_session_ids' \
+  '--session-id[Use a specific session ID for the conversation (must be a valid UUID)]:session:_claude_new_session_id' \
   '--setting-sources[Comma-separated list of setting sources to load (user, project, local)]:sources:' \
   '--settings[Path to a settings JSON file or a JSON string to load additional settings from]:file:_files' \
   '--strict-mcp-config[Only use MCP servers from --mcp-config, ignoring all other MCP configurations]' \
