@@ -39,19 +39,35 @@ _claude_session_ids() {
       < <(jq -r '.entries[].sessionId' "$index_file" 2>/dev/null)
   fi
 
-  # Unindexed JSONL files: sorted ascending by mtime (--tac reverses → newest first)
+  # Unindexed JSONL files: sorted ascending by mtime (newest shown first by compadd -V)
   local -a unindexed_lines
   for f in "$project_dir"/*.jsonl(N); do
     local uuid=$(basename "$f" .jsonl)
     [[ -n "${indexed[$uuid]}" ]] && continue
     local mtime=$(stat -f "%m" "$f" 2>/dev/null | tr -d '[:space:]')
     local datestr=$(stat -f "%Sm" -t "%Y-%m-%d" "$f" 2>/dev/null)
-    local msg=$(head -30 "$f" | jq -r 'select(.type=="user") | .message.content | if type=="array" then .[0].text else . end' 2>/dev/null | head -1 | cut -c1-60)
-    unindexed_lines+=("${mtime}"$'\t'"${uuid}"$'\t'"${datestr}"$'\t'"${msg:-?}")
+    # Extract branch + first real user prompt in one jq call.
+    # Skip isMeta wrappers and <command-*> / <local-command-*> messages.
+    local info=$(head -50 "$f" | jq -rs '
+      [.[] | select(.type=="user")] as $users |
+      ($users[0].gitBranch // "?") as $branch |
+      ([
+        $users[]
+        | select((.isMeta // false) != true and .message.content != null)
+        | .message.content
+        | if type=="array" then .[0].text else . end
+        | select(. != null)
+        | select(test("^\\s*<(command|local-command)") | not)
+      ] | first // "?") as $msg |
+      "\($branch)\t\($msg | gsub("\n"; " ") | .[0:60])"
+    ' 2>/dev/null)
+    local branch="${info%%$'\t'*}"
+    local msg="${info#*$'\t'}"
+    unindexed_lines+=("${mtime}"$'\t'"${uuid}"$'\t'"${datestr}"$'\t'"${branch}"$'\t'"${msg:-?}")
   done
-  while IFS=$'\t' read -r mtime uuid datestr msg; do
+  while IFS=$'\t' read -r mtime uuid datestr branch msg; do
     ids+=("$uuid")
-    labels+=("${datestr} ${uuid:0:8}- ${msg}")
+    labels+=("${datestr} ${uuid:0:8}- [${branch}] ${msg}")
   done < <(printf '%s\n' "${unindexed_lines[@]}" | sort -n)
 
   # Indexed sessions sorted ascending by modified (--tac puts newest last → shown first)
@@ -69,15 +85,6 @@ _claude_session_ids() {
 
 # Offer a freshly-generated UUID for --session-id, which expects a NEW,
 # user-assigned session identifier (not an existing session to resume).
-_claude_new_session_id() {
-  (( ${+commands[uuidgen]} )) || return 1
-  local uuid
-  uuid=$(uuidgen 2>/dev/null | tr '[:upper:]' '[:lower:]')
-  [[ -z "$uuid" ]] && return 1
-  local expl
-  _wanted new-session-id expl 'new session UUID' compadd -- "$uuid"
-}
-
 local curcontext="$curcontext" state line
 typeset -A opt_args
 
@@ -447,7 +454,7 @@ _arguments -s \
   '--remote-control-session-name-prefix[Prefix for auto-generated Remote Control session names (default: hostname)]:prefix:' \
   '--replay-user-messages[Re-emit user messages from stdin back on stdout for acknowledgment (only works with --input-format=stream-json and --output-format=stream-json)]' \
   '(-r --resume)'{-r,--resume}'[Resume a conversation by session ID, or open interactive picker with optional search term]:session:_claude_session_ids' \
-  '--session-id[Use a specific session ID for the conversation (must be a valid UUID)]:session:_claude_new_session_id' \
+  '--session-id[Use a specific session ID for the conversation (must be a valid UUID)]:uuid:' \
   '--setting-sources[Comma-separated list of setting sources to load (user, project, local)]:sources:' \
   '--settings[Path to a settings JSON file or a JSON string to load additional settings from]:file:_files' \
   '--strict-mcp-config[Only use MCP servers from --mcp-config, ignoring all other MCP configurations]' \
